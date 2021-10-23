@@ -6,7 +6,7 @@ export default function (moduleOptions) {
   
   addPlugin({
     src: resolve(__dirname, './plugin.js'),
-    ssr: false,
+    mode: 'client',
     options: { moduleOptions, stores }
   })
 }
