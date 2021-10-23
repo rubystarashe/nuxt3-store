@@ -1,0 +1,30 @@
+{
+  "name": "nuxt3-store",
+  "version": "0.0.1",
+  "description": "Nuxt3 state store with webstorage",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rubystarashe/nuxt3-store.git"
+  },
+  "keywords": [
+    "vue",
+    "nuxt",
+    "vuex",
+    "localstorage",
+    "webstorage",
+    "sessionstorage",
+    "persist",
+    "vuex-persist",
+    "vuex-localstorage"
+  ],
+  "author": "Rubystar Ashe <rubystarashe@gmail.com> (https://github.io/rubystarashe)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rubystarashe/nuxt3-store/issues"
+  },
+  "homepage": "https://github.com/rubystarashe/nuxt3-store#readme"
+}
