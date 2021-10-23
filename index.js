@@ -11,8 +11,8 @@ export default function (moduleOptions) {
 
 export const store = storeObject => {
   if (typeof storeObject == 'object') {
-    const { name, type, reactiveType } = storeObject
-    return new Store({ storageKey: name, storageType: type, reactiveType }).state
+    const { name, type, reactiveType, value } = storeObject
+    return new Store({ storageKey: name, storageType: type, reactiveType }, value).state
   }
   return new Store({}).state
 }

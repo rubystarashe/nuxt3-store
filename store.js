@@ -8,12 +8,12 @@ const reactiveTypes = {
 }
 
 class Store {
-  constructor (options = {}) {
+  constructor (options = {}, defaultValue = {}) {
     this.reactiveType = options.reactiveType || 'reactive'
     this.storageKey = options.storageKey || 'store'
     this.storageType = options.storageType
 
-    this.state = reactiveTypes[this.reactiveType]({})
+    this.state = reactiveTypes[this.reactiveType](defaultValue)
     this.observer = {}
     this.updatedAt = new Date().getTime()
     if (process.client) {

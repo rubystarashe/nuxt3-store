@@ -12,8 +12,8 @@ export default defineNuxtPlugin(async nuxtApp => {
       storageName = store
     }
     else if (typeof store == 'object') {
-      const { name, type, reactiveType } = store
-      storage = new Store({ storageKey: name, storageType: type, reactiveType })
+      const { name, type, reactiveType, value } = store
+      storage = new Store({ storageKey: name, storageType: type, reactiveType }, value)
       storageName = name
     }
     if (!storageName || !storage) return
