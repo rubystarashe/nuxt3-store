@@ -1,6 +1,6 @@
 {
   "name": "nuxt3-store",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Nuxt3 state store with webstorage",
   "main": "index.js",
   "scripts": {

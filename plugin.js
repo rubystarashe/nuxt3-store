@@ -1,3 +1,5 @@
+import { defineNuxtPlugin, useState } from '#app'
+
 import Store from 'nuxt3-store/store'
 
 export default defineNuxtPlugin(async nuxtApp => {
@@ -10,16 +12,12 @@ export default defineNuxtPlugin(async nuxtApp => {
       storageName = store
     }
     else if (typeof store == 'object') {
-      const { name, type, storageName, storageType } = store
-      storage = new Store({ storageType: type || storageType })
-      storageName = name || storageName
+      const { name, type, reactiveType } = store
+      storage = new Store({ storageType: type, reactiveType })
+      storageName = name
     }
     if (!storageName || !storage) return
     nuxtApp.vueApp.provide(storageName, storage.state)
     nuxtApp.provide(storageName, storage.state)
-    useState(
-      storageName,
-      () => storage.state
-    )
   })
 })
