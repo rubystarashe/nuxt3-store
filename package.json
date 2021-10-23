@@ -1,6 +1,6 @@
 {
   "name": "nuxt3-store",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Nuxt3 state store with webstorage",
   "main": "index.js",
   "scripts": {
@@ -26,5 +26,8 @@
   "bugs": {
     "url": "https://github.com/rubystarashe/nuxt3-store/issues"
   },
-  "homepage": "https://github.com/rubystarashe/nuxt3-store#readme"
+  "homepage": "https://github.com/rubystarashe/nuxt3-store#readme",
+  "dependencies": {
+    "nuxt3": "latest"
+  }
 }
