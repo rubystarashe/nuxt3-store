@@ -8,12 +8,12 @@ export default defineNuxtPlugin(async nuxtApp => {
     let storage
     let storageName
     if (typeof store == 'string') {
-      storage = new Store({})
+      storage = new Store({ storageKey: store })
       storageName = store
     }
     else if (typeof store == 'object') {
       const { name, type, reactiveType } = store
-      storage = new Store({ storageType: type, reactiveType })
+      storage = new Store({ storageKey: name, storageType: type, reactiveType })
       storageName = name
     }
     if (!storageName || !storage) return

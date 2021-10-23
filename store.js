@@ -23,7 +23,7 @@ class Store {
           this.state[key] = persistent[key]
         })
         window.addEventListener('storage', event => {
-          if (event?.key == this.storageKey && event?.storageArea === window.localStorage && JSON.stringify(this.state) != event.newValue) {
+          if (event?.key == this.storageKey && JSON.stringify(this.state) != event.newValue) {
             this.storageSyncOnce(this)
           }
         })
