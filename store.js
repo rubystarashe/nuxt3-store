@@ -12,16 +12,43 @@ class Store {
     this.reactiveType = options.reactiveType || 'reactive'
     this.storageKey = options.storageKey || 'store'
     this.storageType = options.storageType
+    this.expiresIn = options.expiresIn
+    this.version = options.version || '1.0.0'
 
+    this.defaultValue = defaultValue
     this.state = reactiveTypes[this.reactiveType](defaultValue)
     this.observer = {}
     this.updatedAt = new Date().getTime()
+    switch (this.storageType) {
+      case 'localStorage':
+      case 'localstorage':
+      case 'local':
+        this.storageType = 'localStorage'
+        break
+      case 'sessionStorage':
+      case 'sessionstorage':
+      case 'session':
+        this.storageType = 'sessionStorage'
+        break
+      default:
+        this.storageType = null
+        break
+    }
     if (process.client) {
-    if (this.storageType == 'localstorage') {
-      const persistent = JSON.parse(window.localStorage.getItem(this.storageKey)) || {}
-        Object.keys(persistent).forEach(key => {
-          this.state[key] = persistent[key]
-        })
+      if (this.storageType) {
+        const now = new Date().getTime()
+        const updatedAt = parseInt(window[this.storageType].getItem(this.storageKey + '_updatedAt')) || 0
+        const version = window[this.storageType].getItem(this.storageKey + '_version')
+        if ((now - updatedAt) > this.expiresIn || this.version != version) {
+          window[this.storageType].setItem(this.storageKey + '_updatedAt', now)
+          window[this.storageType].setItem(this.storageKey + '_version', this.version)
+          window[this.storageType].setItem(this.storageKey, JSON.stringify(this.state))
+        } else {
+          const persistent = JSON.parse(window[this.storageType].getItem(this.storageKey)) || {}
+          Object.keys(persistent).forEach(key => {
+            this.state[key] = persistent[key]
+          })
+        }
         window.addEventListener('storage', event => {
           if (event?.key == this.storageKey && JSON.stringify(this.state) != event.newValue) {
             this.storageSyncOnce(this)
@@ -33,17 +60,17 @@ class Store {
   }
   storageSyncOnce (store = this) {
     const now = new Date().getTime()
-    const updatedAt = window.localStorage.getItem(store.storageKey + '_updatedAt')
+    const updatedAt = parseInt(window[this.storageType].getItem(store.storageKey + '_updatedAt')) || 0
     const diff = updatedAt - store.updatedAt
     if (diff > 1) {
-      const persistent = JSON.parse(window.localStorage.getItem(store.storageKey))
+      const persistent = JSON.parse(window[this.storageType].getItem(store.storageKey))
       Object.keys(persistent).forEach(key => {
         store.state[key] = persistent[key]
       })
-    }
-    else {
-      window.localStorage.setItem(store.storageKey + '_updatedAt', now)
-      window.localStorage.setItem(store.storageKey, JSON.stringify(store.state))
+    } else {
+      window[this.storageType].setItem(store.storageKey + '_updatedAt', now)
+      window[this.storageType].setItem(store.storageKey + '_version', store.version)
+      window[this.storageType].setItem(store.storageKey, JSON.stringify(store.state))
     }
     store.updatedAt = now
     return store

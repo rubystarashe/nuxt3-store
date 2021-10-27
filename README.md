@@ -1,4 +1,5 @@
 # nuxt3-store
+Nuxt3 Store!
 Make a simple global state store with persistent option on Nuxt3
 
 ![Alt Text](https://i.imgur.com/5DAh6tT.gif)    
@@ -28,13 +29,26 @@ export default {
     'storename',  // w/o persistence. state value is {}
     {
       name: 'storename2',  // storage key name
-      type: 'localstorage',  // webstorage type for persistent mode. if not entered, any webstorage will not be used
+      type: 'localstorage',  // webstorage type for persistent mode. if not entered, any webstorage will not be used. localstorage|sessionstorage
       value: {  // default value is {}
         test: 'hello'
       },
-      reactiveType: 'reactive'  // if not entered, reactive is the default. reactive|readonly|shallowReactive|shallowReadonly
+      reactiveType: 'reactive',  // if not entered, reactive is the default. reactive|readonly|shallowReactive|shallowReadonly
+      expiresIn: 1000, // expire time ms. if not entered, the persistent state is permanent
+      version: '1.0.0'  // state store version. if the set version and persisted version are different, the state will be reset to default value when the page is loaded
     }
   ]
+}
+
+// module options
+export default {
+  ...
+  version: '1.0.0', // you can set this version option for the default status version of every state store
+  modules: [['nuxt3-store', {
+    expiresIn: 1000, // expire time ms. if not entered, the persistent state is permanent
+    version: '1.0.0' // if not entered, config version option is set here
+  }]],
+  ...
 }
 ```
 
@@ -56,12 +70,24 @@ onMounted(() => {
 </script>
 ```
 
-# Composables
+```js
+// ./composables/composablemethod.js
+import { useNuxtApp } from '#app'
+const method = () => {
+  const { $storename } = useNuxtApp()
+  ...
+  /* function with store state */
+  ...
+}
+export default method
+```
+
+# Composable States
 You can make composable state with nuxt composables directory usage
 ```js
 // ./composables/storename.js
 import { store } from 'nuxt3-store'
-export default store({ name: 'storename', type: 'localstorage', value: { test: 'hello' }, reactiveType: 'reactive' })
+export default store({ name: 'storename', type: 'localstorage', value: { test: 'hello' }, reactiveType: 'reactive', version: '1.0.0', expiresIn: 1000 })
 ```
 ```js
 // ./composables/storename2.js
@@ -90,9 +116,7 @@ onMounted(() => {
 </script>
 ```
 
-# Todo List
-1. support session mode
-2. support cookie mode
-3. state version management
-4. expire mode
-5. crypto storage
+
+# Todo List/
+1. support cookie mode
+2. crypto storage

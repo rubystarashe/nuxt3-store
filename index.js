@@ -3,9 +3,10 @@ import Store from './store'
 export default function (moduleOptions) {
   const { options, addPlugin } = this
   const stores = options.stores || []
+  const configVersion = options.version || '1.0.0'
   addPlugin({
     src: __dirname + '/plugin.js',
-    options: { moduleOptions, stores }
+    options: { moduleOptions, stores, configVersion }
   })
 }
 

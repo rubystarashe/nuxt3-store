@@ -3,7 +3,7 @@ import { defineNuxtPlugin, useState } from '#app'
 import Store from 'nuxt3-store/store'
 
 export default defineNuxtPlugin(async nuxtApp => {
-  const { moduleOptions, stores } = <%= JSON.stringify(options) %>
+  const { moduleOptions = {}, stores, configVersion } = <%= JSON.stringify(options) %>
   stores.forEach(store => {
     let storage
     let storageName
@@ -12,8 +12,8 @@ export default defineNuxtPlugin(async nuxtApp => {
       storageName = store
     }
     else if (typeof store == 'object') {
-      const { name, type, reactiveType, value } = store
-      storage = new Store({ storageKey: name, storageType: type, reactiveType }, value)
+      const { name, type, reactiveType, value, expiresIn = moduleOptions.expiresIn, version = moduleOptions.version || configVersion } = store
+      storage = new Store({ storageKey: name, storageType: type, reactiveType, expiresIn, version }, value)
       storageName = name
     }
     if (!storageName || !storage) return
