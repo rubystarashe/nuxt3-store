@@ -8,6 +8,7 @@ Make a simple global state store with persistent option on Nuxt3
 # Readme Translation
 한국어 링크: <https://github.com/rubystarashe/nuxt3-store/blob/master/README-kor.md>
 
+
 # Installation
 ```
 npm i nuxt-vuex-localstorage

@@ -1,6 +1,6 @@
 {
   "name": "nuxt3-store",
-  "version": "0.0.6",
+  "version": "1.0.0",
   "description": "Nuxt3 state store with webstorage(localstorage, sessionstorage) for persistent state",
   "main": "index.js",
   "scripts": {
